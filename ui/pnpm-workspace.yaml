@@ -1,0 +1,35 @@
+# pnpm config + supply-chain hardening (pnpm 11.x)
+#
+# In pnpm 11, .npmrc holds ONLY auth/registry settings. Every other setting
+# lives here in pnpm-workspace.yaml (camelCase keys) — this file is required
+# even for a single-package project, not just monorepos.
+#
+# This is a single Vue app: each LeetCode problem is a vue-router route, so
+# there is no `packages:` list. Add one only if you later extract a publishable
+# shared library.
+
+# --- Pin: write exact versions on every `pnpm add` (no ^ / ~) ---
+saveExact: true
+
+# --- Supply chain: release cooldown -----------------------------------------
+# Refuse to RESOLVE any version published less than 3 days ago. Most malicious
+# npm releases are detected and yanked within hours, so a cooldown means we
+# never touch a version during its highest-risk window.
+# Only affects NEW resolutions; versions already in the lockfile are respected.
+minimumReleaseAge: 4320 # 3 days, in minutes
+minimumReleaseAgeExclude: [] # add "pkg@1.2.3" to bypass for a real hotfix
+
+# --- Supply chain: lifecycle-script lockdown --------------------------------
+# Dependency build / postinstall scripts are the #1 attack vector. In pnpm 11
+# they are blocked by default; strictDepBuilds turns an unreviewed script into a
+# HARD install failure. Only packages listed in allowBuilds may run scripts.
+# Review what the tree wants with `pnpm approve-builds`, then add them below.
+strictDepBuilds: true
+allowBuilds:
+  esbuild: true                    # @nuxt/ui dep; postinstall installs its native binary (required)
+  vue-demi: true                   # vueuse/reka-ui dep; postinstall = Vue 2/3 switch (trusted)
+
+# --- Integrity --------------------------------------------------------------
+# node_modules must match the lockfile before any script runs (catches tampering
+# or stale installs). `install` auto-reconciles; use `error` to hard-fail in CI.
+verifyDepsBeforeRun: install

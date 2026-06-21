@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+@import './viz.css';
+
+/* ════════════════════════════════════════════════════════════════
+   Görselleştirme renk token'ları — Tailwind @theme.
+   Tek kaynak: hem `var(--color-viz-l1)` (viz.css içinde) hem de utility
+   olarak kullanılabilir → `bg-viz-l1`, `text-viz-merged`, `border-viz-cur` ...
+   --color-* namespace'i Tailwind'e renk utility'leri ürettirir.
+   ════════════════════════════════════════════════════════════════ */
+@theme {
+  --color-viz-bg: #f4f1e8; /* sıcak kâğıt zemin */
+  --color-viz-grid: #e7e2d4; /* grid dokusu */
+  --color-viz-surface: #fffdf8; /* panel/kart yüzeyi */
+  --color-viz-surface-2: #f8f5ec; /* ikincil yüzey */
+  --color-viz-border: #ddd6c4;
+  --color-viz-border-2: #cbc3ad;
+  --color-viz-ink: #23272e; /* metin */
+  --color-viz-dim: #8c8676; /* soluk metin */
+  --color-viz-dimmer: #b3ac99; /* daha soluk */
+  --color-viz-l1: #0e8a99; /* list1 = petrol mavisi */
+  --color-viz-l2: #d12c66; /* list2 = mercan */
+  --color-viz-merged: #2c9a3e; /* sonuç = yeşil */
+  --color-viz-cur: #c0790a; /* cur / yığın = amber */
+  --color-viz-dummy: #9a9384; /* dummy */
+}
