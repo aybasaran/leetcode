@@ -16,6 +16,16 @@ export const problems: ProblemMeta[] = [
     blurb: 'İki sıralı bağlı listeyi tek sıralı listeye birleştir. Düğümler taşınmaz; sadece Next okları yeniden bağlanır.',
     component: () => import('@/problems/0021-merge-two-sorted-lists/MergeView.vue'),
   },
+  {
+    slug: 'remove-dublicates-from-array',
+    leetcodeId: 26,
+    title: 'Remove Duplicates from Sorted Array',
+    difficulty: 'Easy',
+    tags: ['Array', 'Two Pointers'],
+    icon: 'i-lucide-copy-x',
+    blurb: 'Sıralı diziden tekrarları YERİNDE sil. İki imleç: fast tarar, slow benzersizleri öne yazar. Ekstra bellek yok.',
+    component: () => import('@/problems/0026-remove-dublicates-from-array/RemoveDuplicatesView.vue'),
+  },
 ]
 
 // slug → problem (router/ileride detay için pratik erişim).

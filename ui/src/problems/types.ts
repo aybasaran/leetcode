@@ -20,7 +20,8 @@ export interface ProblemMeta {
 // ──────────────────────────────────────────────────────────
 
 // Açıklama metni parçası: düz string ya da renkli kalın vurgu.
-export type MsgPart = string | { t: string; b: 'l1' | 'l2' | 'cur' | 'm' }
+// linked-list renkleri: l1 / l2 / cur / m   ·   array renkleri: slow / fast
+export type MsgPart = string | { t: string; b: 'l1' | 'l2' | 'cur' | 'm' | 'slow' | 'fast' }
 
 // Bağlı liste düğümü (sahnede tek kutu).
 export interface LLNode {
@@ -45,5 +46,38 @@ export interface Lane {
 export interface Step {
   lanes: Lane[]
   codeLines: number[] // vurgulanacak kod satırları (1 tabanlı)
+  message: MsgPart[]
+}
+
+// ──────────────────────────────────────────────────────────
+//  DİZİ (array) görselleştirme tipleri
+//  Linked list'in aksine: hücreler BİTİŞİK (ok yok), erişim İNDEKSLE.
+//  İki imleç problemleri (remove duplicates, sliding window, ...) burayı paylaşır.
+// ──────────────────────────────────────────────────────────
+
+// Bir dizi hücresi (nums[i] = sahnede tek kutu).
+export interface ArrCell {
+  val: number
+  // hücrenin o anki rolü → rengi belirler:
+  //   idle  okunmamış (nötr)        kept  benzersiz bölge (yeşil)
+  //   scan  fast şu an burada (amber)  dup   tekrar, atlandı (soluk)
+  //   write az önce buraya yazıldı (pop animasyonu)
+  state?: 'idle' | 'kept' | 'dup' | 'scan' | 'write'
+  // hücrenin ÜSTÜNDEKİ imleç bayrakları (aynı hücrede slow+fast olabilir).
+  flags?: { text: string; variant: 'slow' | 'fast' }[]
+}
+
+// Bir dizi şeridi: bitişik kutular + altında indeks numaraları.
+export interface ArrLane {
+  label: string
+  dot: 'array' | 'slow' | 'fast'
+  cells: ArrCell[]
+  showIndex?: boolean // hücre altında 0,1,2,... indeksleri göster
+}
+
+// Dizi problemleri için adım (Step'in array karşılığı).
+export interface ArrStep {
+  lanes: ArrLane[]
+  codeLines: number[]
   message: MsgPart[]
 }

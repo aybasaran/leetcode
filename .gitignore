@@ -33,3 +33,4 @@ go.work.sum
 
 # Claude Code oturum hafızası (kişisel, public repoya gitmesin)
 .remember/
+.playwright-mcp/

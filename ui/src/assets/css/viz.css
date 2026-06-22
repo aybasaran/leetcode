@@ -450,6 +450,131 @@
   white-space: nowrap;
 }
 
+/* ════════════════════════════════════════════════════════════════
+   DİZİ (array) şeridi — bitişik hücreler, üstte slow/fast imleçleri.
+   Linked-list lane'in kardeşi; iki-imleç sorularında tekrar kullanılır.
+   ════════════════════════════════════════════════════════════════ */
+.viz-dot--array {
+  background: var(--color-viz-dim);
+}
+.viz-dot--slow {
+  background: var(--color-viz-merged);
+}
+.viz-dot--fast {
+  background: var(--color-viz-cur);
+}
+
+.viz-arr {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(4px, 0.55vw, 8px);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-top: clamp(44px, 7vh, 54px); /* üstteki imleç bayraklarına yer aç */
+  scrollbar-width: thin;
+}
+.viz-acol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 7px;
+}
+
+/* hücre = dizinin tek kutusu */
+.viz-acell {
+  width: clamp(40px, 3.6vw, 52px);
+  height: clamp(40px, 6.4vh, 50px);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: clamp(15px, 2vw, 20px);
+  border: 2px solid var(--color-viz-border-2);
+  background: var(--color-viz-surface-2);
+  color: var(--color-viz-ink);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.35s,
+    border-color 0.3s,
+    box-shadow 0.3s,
+    background 0.3s,
+    color 0.3s;
+}
+.viz-acell--kept {
+  border-color: var(--color-viz-merged);
+  color: var(--color-viz-merged);
+  background: #eefbef;
+}
+.viz-acell--scan {
+  border-color: var(--color-viz-cur);
+  color: var(--color-viz-cur);
+  background: #fdf4e3;
+  animation: viz-pulse 1.1s ease-in-out infinite;
+}
+.viz-acell--dup {
+  opacity: 0.3;
+  border-style: dashed;
+  filter: grayscale(0.5);
+}
+.viz-acell--write {
+  border-color: var(--color-viz-merged);
+  color: var(--color-viz-merged);
+  background: #eefbef;
+  animation: viz-pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+/* hücre altı indeks */
+.viz-aidx {
+  font-size: 11px;
+  color: var(--color-viz-dimmer);
+  font-variant-numeric: tabular-nums;
+}
+
+/* üstte yığılan imleç bayrakları (aynı hücrede slow + fast olabilir) */
+.viz-flags {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.viz-flag--static {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+}
+.viz-flag--static::after {
+  display: none;
+} /* sadece en alttaki bayrak hücreye ok gösterir */
+.viz-flags .viz-flag--static:last-child::after {
+  display: block;
+}
+.viz-flag--slow {
+  background: #eafaec;
+  color: var(--color-viz-merged);
+  border: 1px solid var(--color-viz-merged);
+}
+.viz-flag--fast {
+  background: #fbf0d8;
+  color: var(--color-viz-cur);
+  border: 1px solid var(--color-viz-cur);
+}
+
+/* mesaj panelinde array renkli vurguları */
+.viz-msg .b-slow {
+  color: var(--color-viz-merged);
+}
+.viz-msg .b-fast {
+  color: var(--color-viz-cur);
+}
+
 /* ── dar / portre ekran ── */
 @media (max-width: 880px) {
   .viz-board {

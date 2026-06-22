@@ -18,6 +18,13 @@ const router = createRouter({
       component: p.component,
       meta: { title: `#${p.leetcodeId} ${p.title}` },
     })),
+    // Kitaplık notları: TEK dinamik route. NoteView, :slug param'ına göre
+    // registry'den içeriği seçer (her not ayrı component değil; render ortak).
+    {
+      path: '/notes/:slug',
+      name: 'note',
+      component: () => import('@/pages/NoteView.vue'),
+    },
     // Bilinmeyen yol → ana sayfa.
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],

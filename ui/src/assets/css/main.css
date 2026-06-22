@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 @import './viz.css';
+@import './notes.css';
 
 /* ════════════════════════════════════════════════════════════════
    Görselleştirme renk token'ları — Tailwind @theme.
